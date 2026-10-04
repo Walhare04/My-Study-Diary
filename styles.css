@@ -60,6 +60,10 @@ body {
   color: #ffffff;
   text-align: center;
   padding: 26px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
 }
 
 .racha-icono {
@@ -77,6 +81,19 @@ body {
 .racha-texto {
   margin: 8px 0 0;
   opacity: 0.92;
+}
+
+/* La mejor racha va en una columna propia, más pequeña que la actual. */
+.racha-mejor {
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  padding-left: 22px;
+}
+
+.racha-mejor-valor {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 /* ---------- Formulario ---------- */
@@ -177,7 +194,19 @@ button:hover {
 }
 
 @media (max-width: 380px) {
+  .racha {
+    gap: 14px;
+  }
+
   .racha-valor {
     font-size: 3rem;
+  }
+
+  .racha-mejor {
+    padding-left: 14px;
+  }
+
+  .racha-mejor-valor {
+    font-size: 1.8rem;
   }
 }

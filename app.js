@@ -11,6 +11,7 @@ const lista = document.getElementById("lista");
 const mensajeVacio = document.getElementById("vacio");
 const textoRacha = document.getElementById("racha");
 const textoRachaDetalles = document.getElementById("racha-texto");
+const textoMejorRacha = document.getElementById("mejor-racha");
 
 const CLAVE = "diario-estudio-sesiones"; // nombre con el que se guarda en localStorage
 
@@ -88,6 +89,31 @@ function calcularRacha(sesiones) {
   return racha;
 }
 
+function calcularMejorRacha(sesiones) {
+  // Las fechas futuras no cuentan para la mejor racha.
+  // "AAAA-MM-DD" se puede comparar como texto porque el formato lleva ceros a la izquierda.
+  const hoy = hoyEnISO();
+  const diasConSesion = new Set(
+    sesiones.map((sesion) => sesion.fecha).filter((fecha) => fecha <= hoy)
+  );
+
+  // Desde cada día contamos hacia atrás cuántos días seguidos tienen sesión,
+  // y nos quedamos con el tramo más largo.
+  let mejor = 0;
+  for (const dia of diasConSesion) {
+    let cuenta = 0;
+    let cursor = dia;
+    while (diasConSesion.has(cursor)) {
+      cuenta++;
+      cursor = moverDias(cursor, -1);
+    }
+    if (cuenta > mejor) {
+      mejor = cuenta;
+    }
+  }
+  return mejor;
+}
+
 // ---------- Pintar la página ----------
 
 function crearFilaSesion(sesion) {
@@ -132,6 +158,8 @@ function pintar() {
   textoRacha.textContent = racha;
   textoRachaDetalles.textContent =
     racha === 1 ? "día seguido estudiando" : "días seguidos estudiando";
+
+  textoMejorRacha.textContent = calcularMejorRacha(sesiones);
 
   lista.innerHTML = "";
   mensajeVacio.hidden = sesiones.length > 0;

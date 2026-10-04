@@ -16,16 +16,22 @@ programar.
 - Diseño limpio y responsive; cualquier pantalla nueva debe verse bien en el móvil.
 
 ## Datos
-- localStorage, clave `diario-estudio-sesiones`: array de `{ date: "AAAA-MM-DD", topic,
-minutes }`.
+- localStorage, clave `diario-estudio-sesiones`: array de `{ id, fecha, tema, minutos }`.
+Los nombres van en español, no los cambies sin una migración.
+- `fecha` es un texto `"AAAA-MM-DD"` (lo que entrega `<input type="date">`), `minutos` es
+un número y `id` es un `Date.now()` que solo sirve para ordenar sesiones del mismo día.
 - Si cambias la forma de los datos, mantén compatibilidad con lo ya guardado o el usuario
 perderá sus sesiones.
 
 ## Fechas y racha (fácil equivocarse)
 - Trabaja siempre con la fecha local del usuario. Nunca uses `toISOString()` ni `new
-Date("AAAA-MM-DD")`: se interpretan en UTC y desplazan el día.
+Date("AAAA-MM-DD")`: se interpretan en UTC y desplazan el día. Usa los helpers `aISO`,
+`moverDias` y `textoFecha` que ya hay en `app.js`.
 - Racha = días consecutivos con al menos 1 sesión que terminan hoy. Si hoy no hay sesión
 pero ayer sí, la racha sigue viva y se cuenta desde ayer.
+- Mejor racha = el tramo más largo de días consecutivos con sesión de todo el historial,
+sin ancla a hoy. Se cuenta desde cada día hacia atrás y se queda con el máximo. No
+aplica la regla de "ayer": cuenta historia, no presente.
 - Varias sesiones el mismo día cuentan como un solo día. Las fechas futuras no suman.
 
 ## Forma de trabajar
