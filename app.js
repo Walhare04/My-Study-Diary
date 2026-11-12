@@ -12,6 +12,7 @@ const mensajeVacio = document.getElementById("vacio");
 const textoRacha = document.getElementById("racha");
 const textoRachaDetalles = document.getElementById("racha-texto");
 const textoMejorRacha = document.getElementById("mejor-racha");
+const textoTotalSemana = document.getElementById("total-semana");
 
 const CLAVE = "diario-estudio-sesiones"; // nombre con el que se guarda en localStorage
 
@@ -114,6 +115,42 @@ function calcularMejorRacha(sesiones) {
   return mejor;
 }
 
+// ---------- Minutos de esta semana ----------
+
+// Devuelve el lunes (inicio de semana) de la semana a la que pertenece fechaISO.
+function inicioSemana(fechaISO) {
+  const partes = fechaISO.split("-").map(Number);
+  const fecha = new Date(partes[0], partes[1] - 1, partes[2]);
+  const diaSemana = fecha.getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
+  const diasDesdeLunes = (diaSemana + 6) % 7;
+  return moverDias(fechaISO, -diasDesdeLunes);
+}
+
+function calcularMinutosSemana(sesiones) {
+  const hoy = hoyEnISO();
+  const lunes = inicioSemana(hoy);
+  const domingo = moverDias(lunes, 6);
+
+  // "AAAA-MM-DD" se puede comparar como texto porque el formato lleva ceros a la izquierda.
+  // A diferencia de las rachas, las fechas futuras sí cuentan si caen en esta semana.
+  let total = 0;
+  for (const sesion of sesiones) {
+    if (sesion.fecha >= lunes && sesion.fecha <= domingo) {
+      total += sesion.minutos;
+    }
+  }
+  return total;
+}
+
+function formatearMinutos(total) {
+  if (total < 60) {
+    return total + " min";
+  }
+  const horas = Math.floor(total / 60);
+  const minutos = total % 60;
+  return horas + " h " + minutos + " min";
+}
+
 // ---------- Pintar la página ----------
 
 function crearFilaSesion(sesion) {
@@ -160,6 +197,7 @@ function pintar() {
     racha === 1 ? "día seguido estudiando" : "días seguidos estudiando";
 
   textoMejorRacha.textContent = calcularMejorRacha(sesiones);
+  textoTotalSemana.textContent = formatearMinutos(calcularMinutosSemana(sesiones));
 
   lista.innerHTML = "";
   mensajeVacio.hidden = sesiones.length > 0;

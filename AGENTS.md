@@ -32,7 +32,12 @@ pero ayer sí, la racha sigue viva y se cuenta desde ayer.
 - Mejor racha = el tramo más largo de días consecutivos con sesión de todo el historial,
 sin ancla a hoy. Se cuenta desde cada día hacia atrás y se queda con el máximo. No
 aplica la regla de "ayer": cuenta historia, no presente.
-- Varias sesiones el mismo día cuentan como un solo día. Las fechas futuras no suman.
+- Para las rachas, varias sesiones el mismo día cuentan como un solo día y las fechas
+  futuras no suman.
+- Total de la semana = suma de `minutos` de las sesiones cuya `fecha` está en la semana
+  en curso (lunes–domingo), en fecha local. A diferencia de las rachas, las fechas
+  futuras **sí cuentan** mientras caigan dentro de la semana en curso. Se calcula al
+  vuelo, sin guardarse.
 
 ## Forma de trabajar
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta.

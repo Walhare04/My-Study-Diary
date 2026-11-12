@@ -96,6 +96,19 @@ body {
   line-height: 1;
 }
 
+/* ---------- Esta semana ---------- */
+
+.semana {
+  text-align: center;
+}
+
+.semana-valor {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--acento);
+}
+
 /* ---------- Formulario ---------- */
 
 form {

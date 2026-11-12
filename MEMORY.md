@@ -4,8 +4,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 aporte.
 
 ## Estado actual
-- v1.1: registrar sesiones (fecha, tema, minutos), racha actual, mejor racha y lista
-  de sesiones.
+- v1.2: registrar sesiones (fecha, tema, minutos), racha actual, mejor racha, total de
+  minutos de la semana y lista de sesiones.
 - Datos en localStorage, sin cambios de formato desde v1.
 
 ## Decisiones (y por qué)
@@ -14,6 +14,9 @@ aporte.
 - La mejor racha se calcula al vuelo, no se guarda: así el formato de datos no cambia y
   no hay riesgo de perder sesiones ya guardadas.
 - La mejor racha excluye fechas futuras, siguiendo la regla de `AGENTS.md`.
+- El total semanal se calcula al vuelo. La semana es lunes–domingo (fecha local) y, a
+  diferencia de las rachas, las fechas futuras sí cuentan mientras caigan dentro de la
+  semana en curso. Se muestra en formato `X h Y min` (o `Y min` si es menos de 60).
 
 ## Aprendizajes y errores a evitar
 - `AGENTS.md` decía que los datos eran `{ date, topic, minutes }`, pero el código siempre
