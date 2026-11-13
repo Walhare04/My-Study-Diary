@@ -6,6 +6,8 @@ aporte.
 ## Estado actual
 - v1.3: registrar sesiones (fecha, tema, minutos), racha actual, mejor racha, total de
   minutos de la semana, días estudiados este mes y lista de sesiones.
+- Incluye la base de tests del mapa de calor (heatmap.test.js, 9/9 en verde).
+- Proyecto subido a GitHub: `https://github.com/Walhare04/My-Study-Diary.git` (rama `main`).
 - Datos en localStorage, sin cambios de formato desde v1.
 
 ## Decisiones (y por qué)
@@ -23,6 +25,9 @@ aporte.
 - Diseño visual: tono "cuaderno de estudio" cálido (fondo papel, tinta oscura), serif
   local en títulos/cifras y acento verde azulado para el resumen semanal, distinto del
   naranja de la racha. Cambio de piel en CSS, sin tocar lógica ni estructura.
+- `.gitignore` del repo: se excluyen `opencode.json` (contiene una API key local), el
+  clon anidado `My-Study-Diary/` y los archivos de herramientas (`.agents/`, `.opencode/`,
+  `skills-lock.json`). El código, docs y specs sí se suben.
 
 ## Aprendizajes y errores a evitar
 - `AGENTS.md` decía que los datos eran `{ date, topic, minutes }`, pero el código siempre
