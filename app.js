@@ -13,8 +13,12 @@ const textoRacha = document.getElementById("racha");
 const textoRachaDetalles = document.getElementById("racha-texto");
 const textoMejorRacha = document.getElementById("mejor-racha");
 const textoTotalSemana = document.getElementById("total-semana");
+const textoDiasMes = document.getElementById("dias-mes");
 
 const CLAVE = "diario-estudio-sesiones"; // nombre con el que se guarda en localStorage
+
+// Helpers de fecha puros, compartidos con los tests (ver heatmap.js).
+const { aISO, hoyEnISO, moverDias } = window.HEATMAP;
 
 // ---------- Guardar y leer sesiones ----------
 
@@ -31,29 +35,9 @@ function guardarSesiones(sesiones) {
 }
 
 // ---------- Fechas (siempre en hora local, nunca en UTC) ----------
-// Working con el formato "AAAA-MM-DD", que es el mismo que usa el campo <input type="date">.
+// Trabajar con el formato "AAAA-MM-DD", que es el mismo que usa el campo <input type="date">.
+// Los helpers aISO/hoyEnISO/moverDias viven en heatmap.js (lógica pura compartida con los tests).
 
-function aISO(fecha) {
-  const anio = fecha.getFullYear();
-  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
-  const dia = String(fecha.getDate()).padStart(2, "0");
-  return anio + "-" + mes + "-" + dia;
-}
-
-function hoyEnISO() {
-  return aISO(new Date());
-}
-
-// Devuelve la fecha "AAAA-MM-DD" que está "dias" días antes (o después) de fechaISO.
-function moverDias(fechaISO, dias) {
-  const partes = fechaISO.split("-").map(Number);
-  const anio = partes[0];
-  const mes = partes[1];
-  const dia = partes[2];
-  return aISO(new Date(anio, mes - 1, dia + dias));
-}
-
-// Convierte "AAAA-MM-DD" en algo legible: "mié, 1 oct 2026".
 function textoFecha(fechaISO) {
   const partes = fechaISO.split("-").map(Number);
   const fecha = new Date(partes[0], partes[1] - 1, partes[2]);
@@ -151,6 +135,23 @@ function formatearMinutos(total) {
   return horas + " h " + minutos + " min";
 }
 
+// ---------- Días estudiados este mes ----------
+
+function calcularDiasEstudiadosMes(sesiones) {
+  const hoy = hoyEnISO();
+  const mesActual = hoy.slice(0, 7); // "AAAA-MM", mes calendario de hoy en fecha local
+
+  // Un día cuenta si tiene al menos una sesión en este mes.
+  // Las fechas futuras del mes no cuentan (solo días ya estudiados).
+  const diasConSesion = new Set(
+    sesiones
+      .filter((sesion) => sesion.fecha.slice(0, 7) === mesActual && sesion.fecha <= hoy)
+      .map((sesion) => sesion.fecha)
+  );
+
+  return diasConSesion.size;
+}
+
 // ---------- Pintar la página ----------
 
 function crearFilaSesion(sesion) {
@@ -198,6 +199,9 @@ function pintar() {
 
   textoMejorRacha.textContent = calcularMejorRacha(sesiones);
   textoTotalSemana.textContent = formatearMinutos(calcularMinutosSemana(sesiones));
+
+  const diasMes = calcularDiasEstudiadosMes(sesiones);
+  textoDiasMes.textContent = "Días este mes: " + diasMes + (diasMes === 1 ? " día" : " días");
 
   lista.innerHTML = "";
   mensajeVacio.hidden = sesiones.length > 0;

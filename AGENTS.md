@@ -38,6 +38,10 @@ aplica la regla de "ayer": cuenta historia, no presente.
   en curso (lunes–domingo), en fecha local. A diferencia de las rachas, las fechas
   futuras **sí cuentan** mientras caigan dentro de la semana en curso. Se calcula al
   vuelo, sin guardarse.
+- Días estudiados este mes = cantidad de fechas distintas (`AAAA-MM-DD`) con al menos
+  una sesión en el mes calendario de hoy (`AAAA-MM`), en fecha local. Las fechas
+  futuras del mes **no cuentan** (solo días ya estudiados). Se calcula al vuelo, sin
+  guardarse.
 
 ## Forma de trabajar
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta.
@@ -54,6 +58,11 @@ porqué) y errores a evitar.
 dejarlo en la memoria.
 - No guardes nunca datos sensibles (claves, tokens, datos personales). 
 
+## Comandos
+- Tests: `node --test`
+## Reglas
+- Lee `docs/constitution.md` y la spec activa (`specs/NNN-*/`) antes de tocar código. 
+
 ## Límites
 - ✅ Siempre: respetar las reglas de fechas y racha, mantener los textos en español.
 - ✅ Siempre: actualizar `MEMORY.md` al terminar cada tarea.
@@ -61,6 +70,7 @@ dejarlo en la memoria.
 - 🚫 Nunca: añadir dependencias, frameworks o un paso de build.
 
 ## Verificación
-- No hay tests ni lint. Probar abriendo `index.html` en el navegador.
+- No hay tests automáticos. Después de cada cambio, verifica con el MCP de Chrome
+DevTools: abre `index.html`, prueba la funcionalidad, revisa la consola y comprueba la vista móvil. 
 - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave
 `diario-estudio-sesiones`. 

@@ -4,8 +4,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 aporte.
 
 ## Estado actual
-- v1.2: registrar sesiones (fecha, tema, minutos), racha actual, mejor racha, total de
-  minutos de la semana y lista de sesiones.
+- v1.3: registrar sesiones (fecha, tema, minutos), racha actual, mejor racha, total de
+  minutos de la semana, días estudiados este mes y lista de sesiones.
 - Datos en localStorage, sin cambios de formato desde v1.
 
 ## Decisiones (y por qué)
@@ -17,6 +17,12 @@ aporte.
 - El total semanal se calcula al vuelo. La semana es lunes–domingo (fecha local) y, a
   diferencia de las rachas, las fechas futuras sí cuentan mientras caigan dentro de la
   semana en curso. Se muestra en formato `X h Y min` (o `Y min` si es menos de 60).
+- Días estudiados este mes = fechas distintas del mes calendario de hoy, calculado al
+  vuelo. Las fechas futuras del mes no cuentan. Se muestra en la tarjeta "Esta semana"
+  como "Días este mes: N" (singular/plural).
+- Diseño visual: tono "cuaderno de estudio" cálido (fondo papel, tinta oscura), serif
+  local en títulos/cifras y acento verde azulado para el resumen semanal, distinto del
+  naranja de la racha. Cambio de piel en CSS, sin tocar lógica ni estructura.
 
 ## Aprendizajes y errores a evitar
 - `AGENTS.md` decía que los datos eran `{ date, topic, minutes }`, pero el código siempre
