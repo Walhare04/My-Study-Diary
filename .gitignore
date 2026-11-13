@@ -1,0 +1,14 @@
+# Configuración local de herramientas (no compartir)
+opencode.json
+.opencode/
+.agents/
+skills-lock.json
+
+# Clon anidado accidental dentro del proyecto (si se borra, también puede ignorarse)
+My-Study-Diary/
+
+# Sistema operativo y temporales
+Thumbs.db
+.DS_Store
+*.log
+*.tmp
