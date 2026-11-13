@@ -25,9 +25,10 @@ aporte.
 - Diseño visual: tono "cuaderno de estudio" cálido (fondo papel, tinta oscura), serif
   local en títulos/cifras y acento verde azulado para el resumen semanal, distinto del
   naranja de la racha. Cambio de piel en CSS, sin tocar lógica ni estructura.
-- `.gitignore` del repo: se excluyen `opencode.json` (contiene una API key local), el
-  clon anidado `My-Study-Diary/` y los archivos de herramientas (`.agents/`, `.opencode/`,
-  `skills-lock.json`). El código, docs y specs sí se suben.
+- `.gitignore` del repo: se excluyen `opencode.json` (API key local) y los archivos de
+  herramientas (`.agents/`, `.opencode/`, `skills-lock.json`). Código, docs y specs se suben.
+- El clon anidado `My-Study-Diary/` (duplicado obsoleto) se eliminó; ya no hace falta
+  ignorarlo. Se mejoró el `README.md` (proyecto, cómo abrir, v1.3 y verificación).
 
 ## Aprendizajes y errores a evitar
 - `AGENTS.md` decía que los datos eran `{ date, topic, minutes }`, pero el código siempre
